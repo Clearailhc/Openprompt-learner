@@ -1,4 +1,4 @@
 datasets/.cache
 .DS_Store
-.idea/
-.vscode/
+.idea
+.vscode
