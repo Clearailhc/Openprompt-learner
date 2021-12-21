@@ -9,9 +9,12 @@
 
 
 # load dataset
-from datasets import load_dataset
-raw_dataset = load_dataset('super_glue', 'cb', cache_dir="../datasets/.cache/huggingface_datasets")
+from datasets import load_dataset, load_from_disk
+
+# raw_dataset = load_dataset('super_glue', 'cb', cache_dir="datasets/.cache/huggingface_datasets")
+raw_dataset = load_from_disk("../datasets/super_glue")
 raw_dataset['train'][0]
+
 # Note that if you are running this scripts inside a GPU cluster, there are chances are you are not able to connect to huggingface website directly. 
 # In this case, we recommand you to run `load_dataset` on some machine that have internet connections. 
 # Then use `raw_dataset.save_to_disk(path)` method to save to local path.
