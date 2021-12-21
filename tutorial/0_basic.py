@@ -5,14 +5,15 @@
 # 3. How does the template wrap the input example into a templated one.
 # 4. How do we hide the PLM tokenization details behind and provide a simple tokenization
 # 5. How do construct a verbalizer using one/many label words
-# 5. How to train the prompt like a traditional Pretrained Model.
+# 6. How to train the prompt like a traditional Pretrained Model.
 
-
+import os
+os.chdir("/home/lhc/Projects/Openprompt-learner")
 # load dataset
 from datasets import load_dataset, load_from_disk
 
 # raw_dataset = load_dataset('super_glue', 'cb', cache_dir="datasets/.cache/huggingface_datasets")
-raw_dataset = load_from_disk("../datasets/super_glue")
+raw_dataset = load_from_disk("datasets/super_glue")
 raw_dataset['train'][0]
 
 # Note that if you are running this scripts inside a GPU cluster, there are chances are you are not able to connect to huggingface website directly. 
