@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="lhc@103.46.128.21:54790" createEmptyFolders="true">
+  <component name="PublishConfigData" autoUpload="Always" serverName="lhc@120.55.81.165:54790" createEmptyFolders="true">
     <serverData>
-      <paths name="lhc@103.46.128.21:54790">
+      <paths name="lhc@120.55.81.165:54790">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/lhc/Projects/Openprompt-learner" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/lhc/Projects/Openprompt-learner" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

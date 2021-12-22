@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/datasets/.cache" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 3.8.12 (sftp://lhc@103.46.128.21:54790/home/lhc/anaconda3/envs/torch/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Open-99 Python 3.8.12 (sftp://lhc@120.55.81.165:54790/home/lhc/anaconda3/envs/torch/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
