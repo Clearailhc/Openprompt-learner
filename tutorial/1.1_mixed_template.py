@@ -49,7 +49,7 @@ from openprompt.prompts import ManualVerbalizer
 import torch
 
 # for example the verbalizer contains multiple label words in each class
-myverbalizer = ManualVerbalizer(tokenizer, num_classes=2, 
+myverbalizer = ManualVerbalizer(tokenizer, num_classes=2,
                         label_words=[["yes"], ["no"], ["maybe"]])
 
 print(myverbalizer.label_words_ids)
@@ -67,7 +67,7 @@ if use_cuda:
 # ## below is standard training
 
 
-from transformers import  AdamW, get_linear_schedule_with_warmup
+from transformers import AdamW, get_linear_schedule_with_warmup
 loss_func = torch.nn.CrossEntropyLoss()
 
 no_decay = ['bias', 'LayerNorm.weight']
@@ -100,13 +100,14 @@ for epoch in range(10):
         optimizer1.zero_grad()
         optimizer2.step()
         optimizer2.zero_grad()
-        print(tot_loss/(step+1))
+        if step %100 ==1:
+            print("Epoch {}, average loss: {}".format(epoch, tot_loss/(step+1)), flush=True)
     
 # ## evaluate
 
 # %%
-validation_dataloader = PromptDataLoader(dataset=dataset["validation"], template=mytemplate, tokenizer=tokenizer, 
-    tokenizer_wrapper_class=WrapperClass, max_seq_length=256, decoder_max_length=3, 
+validation_dataloader = PromptDataLoader(dataset=dataset["validation"], template=mytemplate, tokenizer=tokenizer,
+    tokenizer_wrapper_class=WrapperClass, max_seq_length=256, decoder_max_length=3,
     batch_size=4,shuffle=False, teacher_forcing=False, predict_eos_token=False,
     truncate_method="head")
 
@@ -123,3 +124,39 @@ for step, inputs in enumerate(validation_dataloader):
 
 acc = sum([int(i==j) for i,j in zip(allpreds, alllabels)])/len(allpreds)
 print(acc)
+
+
+
+########## 尝试固定PLM进行训练
+
+from openprompt import PromptForClassification
+from transformers import AdamW, get_linear_schedule_with_warmup
+
+use_cuda = True
+prompt_model2 = PromptForClassification(plm=plm, template=mytemplate, verbalizer=myverbalizer, freeze_plm=True)
+if use_cuda:
+    prompt_model2 = prompt_model2.cuda()
+
+# 只使用templet中的参数
+optimizer_grouped_parameters3 = [
+    {'params': [p for n,p in prompt_model2.template.named_parameters() if "raw_embedding" not in n]}
+]
+
+optimizer3 = AdamW(optimizer_grouped_parameters3, lr=1e-4)
+loss_func = torch.nn.CrossEntropyLoss()
+
+# 训练
+for epoch in range(20):
+    tot_loss = 0
+    for step, inputs in enumerate(train_dataloader):
+        if use_cuda:
+            inputs = inputs.cuda()
+        logits = prompt_model2(inputs)
+        labels = inputs['label']
+        loss = loss_func(logits, labels)
+        loss.backward()
+        tot_loss += loss.item()
+        optimizer3.step()
+        optimizer3.zero_grad()
+        if step %100 ==1:
+            print("Epoch {}, average loss: {}".format(epoch, tot_loss/(step+1)), flush=True)
