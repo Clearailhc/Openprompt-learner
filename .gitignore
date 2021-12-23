@@ -1,5 +1,6 @@
 datasets/.cache
 .DS_Store
 .idea
+.idea/*
 .vscode
 .git
