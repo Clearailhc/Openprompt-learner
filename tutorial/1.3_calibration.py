@@ -1,4 +1,4 @@
-# In this scripts, you will laern how to do calibartion and zero-shot learning
+# In this scripts, you will laern how to do calibration and zero-shot learning
 # We use manual verbalizer and knowledgeable verbalizer as examples.
 from tqdm import tqdm
 from openprompt.data_utils.text_classification_dataset import AgnewsProcessor
