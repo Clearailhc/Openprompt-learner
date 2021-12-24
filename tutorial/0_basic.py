@@ -7,8 +7,8 @@
 # 5. How do construct a verbalizer using one/many label words
 # 6. How to train the prompt like a traditional Pretrained Model.
 
-import os
-os.chdir("/home/lhc/Projects/Openprompt-learner")
+# import os
+# os.chdir("/home/lhc/Projects/Openprompt-learner")
 # load dataset
 from datasets import load_dataset, load_from_disk
 
