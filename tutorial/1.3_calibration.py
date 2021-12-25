@@ -49,6 +49,8 @@ if use_cuda:
     prompt_model=  prompt_model.cuda()
 
 org_label_words_num = [len(prompt_model.verbalizer.label_words[i]) for i in range(4)]
+print(org_label_words_num)
+
 from openprompt.utils.calibrate import calibrate
 # calculate the calibration logits
 cc_logits = calibrate(prompt_model, support_dataloader)
