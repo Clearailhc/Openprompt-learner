@@ -6,10 +6,10 @@ import torch
 from openprompt.data_utils.utils import InputExample
 
 dataset = {}
-dataset['train'] = AgnewsProcessor().get_train_examples("./datasets/TextClassification/agnews")
-dataset['test'] = AgnewsProcessor().get_test_examples("./datasets/TextClassification/agnews")
+dataset['train'] = AgnewsProcessor().get_train_examples("datasets/agnews")
+dataset['test'] = AgnewsProcessor().get_test_examples("datasets/agnews")
 from openprompt.plms import load_plm
-plm, tokenizer, model_config, WrapperClass = load_plm("roberta", "../../plm_cache/roberta-large")
+plm, tokenizer, model_config, WrapperClass = load_plm("roberta", "roberta-base")
 
 from openprompt.prompts import ManualTemplate
 mytemplate = ManualTemplate(tokenizer=tokenizer).from_file("scripts/TextClassification/agnews/manual_template.txt", choice=0)
