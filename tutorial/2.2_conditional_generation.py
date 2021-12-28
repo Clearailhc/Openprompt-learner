@@ -145,8 +145,8 @@ for epoch in range(5):
         optimizer.step()
         scheduler.step()
         optimizer.zero_grad()
-        if global_step %500 ==0: 
-            print("Epoch {}, global_step {} average loss: {} lr: {}".format(epoch, global_step, (tot_loss-log_loss)/500, scheduler.get_last_lr()[0]), flush=True)
+        if global_step %100 ==0:
+            print("Epoch {}, global_step {} average loss: {} lr: {}".format(epoch, global_step, (tot_loss-log_loss)/100, scheduler.get_last_lr()[0]), flush=True)
             log_loss = tot_loss
 
 generated_sentence = evaluate(prompt_model, test_dataloader)

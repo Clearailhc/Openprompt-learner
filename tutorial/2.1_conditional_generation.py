@@ -1,5 +1,8 @@
 import argparse
 import torch
+import os
+os.chdir('/home/lhc/home/lhc/Projects/Openprompt-learner')
+
 parser = argparse.ArgumentParser("")
 parser.add_argument("--lr", type=float, default=1e-2)
 parser.add_argument("--plm_eval_mode", action="store_true")
@@ -12,9 +15,9 @@ from openprompt.data_utils.conditional_generation_dataset import WebNLGProcessor
 
 
 dataset = {}
-dataset['train'] = WebNLGProcessor().get_train_examples("./datasets/CondGen/webnlg_2017/")
-dataset['validation'] = WebNLGProcessor().get_dev_examples("./datasets/CondGen/webnlg_2017/")
-dataset['test'] = WebNLGProcessor().get_test_examples("./datasets/CondGen/webnlg_2017/")
+dataset['train'] = WebNLGProcessor().get_train_examples("datasets/CondGen/webnlg_2017/")
+dataset['validation'] = WebNLGProcessor().get_dev_examples("datasets/CondGen/webnlg_2017/")
+dataset['test'] = WebNLGProcessor().get_test_examples("datasets/CondGen/webnlg_2017/")
 
 
 
@@ -40,11 +43,11 @@ plm, tokenizer, model_config, WrapperClass = load_plm(args.model, args.model_nam
 from openprompt.prompts import SoftTemplate
 from openprompt.prompts import MixedTemplate
 
-# mytemplate = SoftTemplate(model=plm, tokenizer=tokenizer, text='{"placeholder":"text_a"} {"special": "<eos>"} {"mask"}',num_tokens=100)
+mytemplate = SoftTemplate(model=plm, tokenizer=tokenizer, text='{"placeholder":"text_a"} {"special": "<eos>"} {"mask"}',num_tokens=100)
 
 # mytemplate = SoftTemplate(model=plm, tokenizer=tokenizer, text='{"placeholder":"text_a"} {"soft"} {"soft"} {"soft"} {"placeholder":"text_b"} {"soft"} {"mask"}.')
 
-mytemplate = MixedTemplate(model=plm, tokenizer=tokenizer, text='{"placeholder":"text_a"} {"soft": "Question:"} {"placeholder":"text_b"}? Is it correct? {"soft"} {"mask"}.')
+# mytemplate = MixedTemplate(model=plm, tokenizer=tokenizer, text='{"placeholder":"text_a"} {"soft": "Question:"} {"placeholder":"text_b"}? Is it correct? {"soft"} {"mask"}.')
 
 
 # To better understand how does the template wrap the example, we visualize one instance.
